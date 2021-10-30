@@ -87,10 +87,15 @@ app.post('/about', urlencodedParser, async function (req, res, err) {
 
 })
 app.get('/insecure', function (req, res) {
+    // res.return("Yash")
     res.render('pages/insecure', { data: req.body });
 });
 
 
+app.post('/insecure', urlencodedParser, async function (req, res, err) {
+    console.log(req)
+    res.render('pages/insecure', { data: req.body.username });
+})
 app.listen(8080);
 console.log('8080 is the magic port');
 

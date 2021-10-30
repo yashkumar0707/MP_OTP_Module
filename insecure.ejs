@@ -36,21 +36,13 @@
 
 </body>
 <!-- <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
-    integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/aes.min.js"
-    integrity="sha512-4b1zfeOuJCy8B/suCMGNcEkMcQkQ+/jQ6HlJIaYVGvg2ZydPvdp7GY0CuRVbNpSxNVFqwTAmls2ftKSkDI9vtA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha256.min.js"
-    integrity="sha512-fv28nWHTcWfoN3KBd2fs+YWsirQ+L0b/iIRS7HcNDPSAwxy6oSjRrYjQ+OtJoJz0wUKsVcPYgwcZzK04KfHD0A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
 <script>
     function yash() {
         var element = document.getElementById(id);
         document.getElementById("id").value = "Yash1"
         console.log(document.getElementById("id"))
-        var ele = "Yash"
+        var ele ="Yash"
         // const crypto = require('crypto-js');
         // const buffer = require('buffer');
         // const { privateKey, publicKey } = CryptoJS.generateKeyPairSync('rsa', {
@@ -71,19 +63,12 @@
         console.log(ele)
         console.log(hash.toString());
         var hash = CryptoJS.SHA256(ele)
-        hash = hash.toString()
-        // var encrypted = CryptoJS.AES.encrypt("Yash", "Secret Passphrase").toString();
+        // Printing the result
+        // var encrypted = CryptoJS.AES.encrypt(hash, "Secret Passphrase");
 
         // var decrypted = CryptoJS.AES.decrypt(encrypted, "Secret Passphrase");
         // console.log(decrypted)
-        var ciphertext = CryptoJS.AES.encrypt(hash, 'secret key 123').toString();
-
-        // Decrypt
-        var bytes = CryptoJS.AES.decrypt(ciphertext, 'secret key 123');
-        var originalText = bytes.toString(CryptoJS.enc.Utf8);
-
-        console.log(originalText); // 'my message'
-
+​
     }
 </script>
 
