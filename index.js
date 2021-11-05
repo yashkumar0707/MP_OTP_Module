@@ -13,6 +13,7 @@ const { spawn } = require('child_process');
 var bodyParser = require("body-parser");
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var jsonParser = bodyParser.json()
+var CryptoJS = require("crypto-js");
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 let { PythonShell } = require('python-shell')
@@ -88,12 +89,30 @@ app.post('/about', urlencodedParser, async function (req, res, err) {
 })
 app.get('/insecure', function (req, res) {
     // res.return("Yash")
+    
+
     res.render('pages/insecure', { data: req.body });
 });
 
 
 app.post('/insecure', urlencodedParser, async function (req, res, err) {
-    console.log(req)
+    console.log(req.body)
+    var input = req.body.username.split(" ")
+    console.log(input)
+    var bytes = CryptoJS.AES.decrypt(input[0], 'secret key 123');
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);
+
+    console.log(originalText); // 'my message'
+    var hash = CryptoJS.SHA256(input[1])
+    hash = hash.toString()
+    if(hash === originalText)
+    {
+        console.log('Verified')
+    }
+    else
+    {
+        console.log(hash, originalText)
+    }
     res.render('pages/insecure', { data: req.body.username });
 })
 app.listen(8080);
