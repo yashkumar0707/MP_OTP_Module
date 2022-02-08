@@ -45,8 +45,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha256.min.js"
     integrity="sha512-fv28nWHTcWfoN3KBd2fs+YWsirQ+L0b/iIRS7HcNDPSAwxy6oSjRrYjQ+OtJoJz0wUKsVcPYgwcZzK04KfHD0A=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+<!-- <script src="./jsencrypt.js"></script> -->
 <script>
+    var data = "<%= data1 %>";
     function yash() {
+        console.log(data)
         var element = document.getElementById(id);
         // document.getElementById("id").value = "Yash"
         console.log(document.getElementById("id"))
@@ -76,15 +80,24 @@
 
         // var decrypted = CryptoJS.AES.decrypt(encrypted, "Secret Passphrase");
         // console.log(decrypted)
-        var ciphertext = CryptoJS.AES.encrypt(hash,'secret key 123').toString();
+        var ciphertext = CryptoJS.AES.encrypt(hash, data).toString();
+        console.log(ciphertext)
         document.getElementById("id").value = ciphertext + " " + ele;
-        // Decrypt
-        var bytes = CryptoJS.AES.decrypt(ciphertext, 'secret key 123');
-        var originalText = bytes.toString(CryptoJS.enc.Utf8);
+        // // Decrypt
+        // var bytes = CryptoJS.AES.decrypt(ciphertext,);
+        // var originalText = bytes.toString(CryptoJS.enc.Utf8);
 
-        console.log(originalText + 'Uas'); // 'my message'
+        // console.log(originalText + 'Uas'); // 'my message'
 
+        // var crypt = new JSEncrypt();
+        // //You can also use setPrivateKey and setPublicKey, they are both alias to setKey
+        // crypt.setKey("-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCdIm4cTJR7IO9IDv+o6h+nWmT0ejipRc7O1ZFn5eOQYMU6nEFn68UfbZOqbCk/ZfJjdbsPUILpgIN3PAGKQC32vOvDQ2gx0Kt9MZbG6UmbvtCvzxntpCe+MGnJCXbuLmJV/d/nGi64lOYdun8/QW41lBm6h1zvdUkA1G36ChN4WQIDAQAB-----END PUBLIC KEY-----");
+
+        // var text = 'test';
+        // var enc = crypt.encrypt(text);
+        // console.log(enc)    
     }
 </script>
+<!-- <script src="./insecure.js"></script> -->
 
 </html>

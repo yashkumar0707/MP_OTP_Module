@@ -2,21 +2,27 @@ let mysql = require('mysql');
 let connection = mysql.createConnection({
     host: 'localhost',
     user: 'xbroz',
-    password: 'mentalcase',
+    password: 'Mentalcase@1234',
     database: 'mp'
 });
 
 // load the things we need
 var express = require('express');
+
+var path = require('path');
 var app = express();
 const { spawn } = require('child_process');
 var bodyParser = require("body-parser");
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var jsonParser = bodyParser.json()
 var CryptoJS = require("crypto-js");
+
+require('dotenv').config()
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 let { PythonShell } = require('python-shell')
+
+app.use(express.static(path.join(__dirname, 'public')));
 // use res.render to load up an ejs view file
 connection.connect(function (err) {
     if (err) {
@@ -31,7 +37,7 @@ connection.connect(function (err) {
     });
     console.log('Connected to the MySQL server.');
 });
-
+console.log(process.env.KEY)
 // index page
 app.get('/', async function (req, res) {
     const username = 'yash'
@@ -91,18 +97,19 @@ app.get('/insecure', function (req, res) {
     // res.return("Yash")
     
 
-    res.render('pages/insecure', { data: req.body });
+    res.render('pages/insecure', { data: req.body, data1: 'secret key 123' });
 });
 
 
 app.post('/insecure', urlencodedParser, async function (req, res, err) {
-    console.log(req.body)
+    console.log("Input from frontend:",req.body)
     var input = req.body.username.split(" ")
-    console.log(input)
+    console.log("Encrypted Input: ",input[0])
+    console.log("Original Input: ",input[1])
     var bytes = CryptoJS.AES.decrypt(input[0], 'secret key 123');
     var originalText = bytes.toString(CryptoJS.enc.Utf8);
 
-    console.log(originalText); // 'my message'
+    console.log("The hash: ",originalText); // 'my message'
     var hash = CryptoJS.SHA256(input[1])
     hash = hash.toString()
     if(hash === originalText)
@@ -113,8 +120,11 @@ app.post('/insecure', urlencodedParser, async function (req, res, err) {
     {
         console.log(hash, originalText)
     }
-    res.render('pages/insecure', { data: req.body.username });
+    res.render('pages/insecure', { data: req.body.username , data1: 'secret key 123'});
 })
+
+app.use('/otp', require('./public/otp'));
+
 app.listen(8080);
 console.log('8080 is the magic port');
 
